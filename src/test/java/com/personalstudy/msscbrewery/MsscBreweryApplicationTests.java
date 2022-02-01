@@ -2,6 +2,7 @@ package com.personalstudy.msscbrewery;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.personalstudy.msscbrewery.services.BeerService;
+import com.personalstudy.msscbrewery.web.controller.BeerController;
 import com.personalstudy.msscbrewery.web.model.BeerDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,7 +15,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.UUID;
 
-import static org.assertj.core.internal.bytebuddy.matcher.ElementMatchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
