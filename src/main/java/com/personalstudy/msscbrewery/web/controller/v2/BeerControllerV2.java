@@ -1,7 +1,7 @@
-package com.personalstudy.msscbrewery.web.controller;
+package com.personalstudy.msscbrewery.web.controller.v2;
 
-import com.personalstudy.msscbrewery.services.BeerService;
-import com.personalstudy.msscbrewery.web.model.BeerDto;
+import com.personalstudy.msscbrewery.services.v2.BeerServiceV2;
+import com.personalstudy.msscbrewery.web.model.v2.BeerDtoV2;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,28 +15,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
 import java.util.UUID;
 
-@Deprecated
-@RequestMapping("/api/v1/beer")
+@RequestMapping("/api/v2/beer")
 @RestController
-public class BeerController {
+public class BeerControllerV2 {
 
-    private final BeerService beerService;
+    private final BeerServiceV2 beerServiceV2;
 
-    public BeerController(BeerService beerService) {
-        this.beerService = beerService;
+    public BeerControllerV2(BeerServiceV2 beerServiceV2) {
+        this.beerServiceV2 = beerServiceV2;
     }
 
     @GetMapping("/{beerId}")
-    public ResponseEntity<BeerDto> getBeer(@PathVariable("beerId") UUID beerId) {
-        return new ResponseEntity<>(beerService.getBeerById(beerId), HttpStatus.OK);
+    public ResponseEntity<BeerDtoV2> getBeer(@PathVariable("beerId") UUID beerId) {
+        return new ResponseEntity<>(beerServiceV2.getBeerById(beerId), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity handlePost(@Valid @RequestBody BeerDto beerDto) {
-        BeerDto savedDto = beerService.saveNewBeerDto(beerDto);
+    public ResponseEntity handlePost(@RequestBody BeerDtoV2 beerDto) {
+        BeerDtoV2 savedDto = beerServiceV2.saveNewBeerDto(beerDto);
 
         HttpHeaders headers = new HttpHeaders();
         //TODO: add hostname to url
@@ -46,8 +44,8 @@ public class BeerController {
     }
 
     @PutMapping("/{beerId}")
-    public ResponseEntity handleUpdate(@PathVariable UUID beerId, @Valid @RequestBody BeerDto beerDto) {
-        beerService.updateBeerDto(beerId, beerDto);
+    public ResponseEntity handleUpdate(@PathVariable UUID beerId, @RequestBody BeerDtoV2 beerDto) {
+        beerServiceV2.updateBeerDto(beerId, beerDto);
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
@@ -55,6 +53,6 @@ public class BeerController {
     @DeleteMapping("/{beerId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void handleDelete(@PathVariable UUID beerId) {
-        beerService.deleteById(beerId);
+        beerServiceV2.deleteById(beerId);
     }
 }
