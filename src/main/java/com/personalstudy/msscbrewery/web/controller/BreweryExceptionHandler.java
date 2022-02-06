@@ -2,6 +2,7 @@ package com.personalstudy.msscbrewery.web.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -32,5 +33,11 @@ public class BreweryExceptionHandler {
         });
 
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(BindException.class)
+    public ResponseEntity<List> handleBindException(BindException ex) {
+
+        return new ResponseEntity(ex.getAllErrors(), HttpStatus.BAD_REQUEST);
     }
 }
